@@ -1,0 +1,53 @@
+1. While you are changing the password, do not use symbols (e.g., @, /, &, ") in the password for Oracle
+
+
+2. To complete your transaction on Oracle, do not forget to run “commit” after the transaction. You can also rollback. Oracle recommends that you explicitly end every transaction in your application programs with a COMMIT or ROLLBACK statement, including the last transaction, before disconnecting from Oracle Database. If you do not explicitly commit the transaction and the program terminates abnormally, then the last uncommitted transaction is automatically rolled back.
+
+
+3. Run a sql script on the server
+
+    Upload the script file to account@fourier.cs.iit.edu
+    SQL>@xx.sql      xx is case sensitive
+
+
+You can also create folder on the server, then run @/folder/xx.sql
+
+4. Create tables, do not forget primary key; if foreign key is specified, the primary key in another table should be created before creating the current table.
+
+
+5. Insert values, if foreign key is defined in the current table to reference another table, insert values to the other table first (make sure the values are consistent in the common attributes; ensuring referential integrity)
+
+
+6. In Oracle, show the attributes of a table: desc table_name
+
+
+7. Do not forget “;” at the end of the SQL statement
+
+8. Do not copy sql statements directly from the slides, since the single quotation marks in PDF files are unrecognized. Type ‘ for character strings. 
+
+9. In Oracle 10g or later, alter table:
+
+   ALTER TABLE table_name   MODIFY column_name datatype;
+
+   It does not support “alter table r drop A”, it should be "alter table r drop column A".
+
+10. Using SQL Developer to access to Oracle@fourier works only on campus. Maybe port 1521 is only enabled for IIT IP addresses. Command lines work both on campus and off campus.   
+
+11. Differences between "IN" and "EXISTS": "IN" executes only once (faster for small number of reuslts in the subquery); "EXISTS" executes multiple times (faster for large number of results in the subquery).
+
+12. Show all the tables in Oracle:
+
+      select table_name from all_tables;
+
+13. order by DESC one column, ASC another column, for instance:
+
+select dept_name, salary from instructor order by dept_name asc, salary desc; 
+
+14. View relationships between tables: 
+
+Steps in SQL Developer
+
+go to View > Data Modeler > Browser to open up the Browser view/tab.
+(Browser view/tab*) right click on Relational Models and select New Relational Model which opens up a new window.
+This should create a new blank diagram which one can drag and drop tables from the Connections view into the diagram.
+

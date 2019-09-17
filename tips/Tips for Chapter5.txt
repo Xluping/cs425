@@ -1,0 +1,68 @@
+Some Tips
+1. "With" can create a temporary view
+
+2. view name cannot be the same as an existing object, e.g., relation
+
+3. a new aggregated column must be given a name
+
+4. recursive queries will be introduced in Chapter 6
+
+5. In Oracle, an example of recursive query (list every course and its all prerequisites):
+
+with rec_prereq(course_id, prereq_id) as (
+
+        select course_id, prereq_id
+        from prereq
+    union all 
+        select rec_prereq.course_id, prereq.prereq_id
+        from rec_prereq, prereq
+        where rec_prereq.prereq_id = prereq.course_id
+    )
+select ∗ from rec_prereq;
+
+(Recursive) View can be created together with the above statement.
+
+union all is required. No "recursive" keyword.
+
+In some other databases (e.g., Postgre): 
+
+CREATE RECURSIVE VIEW view_name(columns) AS
+
+SELECT columns; 
+
+                or                   
+
+CREATE VIEW view_name AS
+
+  WITH RECURSIVE cte_name (columns) AS (
+
+    SELECT ...)
+
+  SELECT columns FROM cte_name;
+
+6. If a view does not include the PK of a relation, or just include a part of the PK, then values cannot be inserted into the view. 
+
+7. Insert into a_view values(xxx) can make the tuple insertion happen in the relation but not the view
+
+8. show autocommit;
+
+9. set autcommit ON/OFF/IMM/n;
+
+10. Execute PL (e.g., Begin End) with "/" (a newline after ";")
+
+11. FK can be defined to reference the attribute in the current table (a revision is made in the DDL - slide 25)
+
+12. statement "create type dollars as numeric(12,2) final" does not work in Oracle. Instead, here are two examples of creating types in Oracle:
+
+      create type dollars as varray(10) of numeric(12,2);
+
+      create type address as object(addr varchar(20);
+
+      remember to add "/" to execute "create type" 
+
+13. "domain" is created together with "type" (CREATE DOMAIN is not a valid DDL statement in Oracle)
+
+14. blob, clob are two data types up to 2GB
+
+15. in most DBs, "cascading" is the default behavior for revoking privileges. Specifying "restrict" can prevent cascading revocation.
+
