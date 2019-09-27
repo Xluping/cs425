@@ -167,13 +167,13 @@ select sum(salary) from instructor;
 
 select dept_name, avg_salary
 from (select dept_name, avg(salary) as avg_salary from instructor group by dept_name)
-where avg_salary>42000;
+where avg_salary>90000;
 
 /* another way*/
 with deptavg(dept_name, avg_salary) as (select dept_name, avg(salary) from instructor group by dept_name) 
 select dept_name, avg_salary 
 from deptavg
-where avg_salary>42000;
+where avg_salary>90000;
 
 select distinct course_id
 from section 
@@ -194,7 +194,7 @@ select distinct T.name
 from instructor T, instructor S
 where T.salary>S.salary and S.dept_name='Biology';
 
-select name from instructor 
+select name, salary from instructor 
 where salary > some(select salary from instructor where dept_name='Biology');
 
 select name from instructor
@@ -212,7 +212,7 @@ where not exists ((select course_id from course where dept_name ='Biology') minu
 (select T.course_id from takes T where S.ID=T.ID));
 
 with max_budget(value) as (select max(budget) from department)
-select budget from department, max_budget
+select dept_name from department, max_budget
 where department.budget=max_budget.value;
 
 with dept_total(dept_name, value) as
@@ -232,8 +232,30 @@ where salary*10> (select budget from department where department.dept_name=instr
 
 /*insert into course values('CS-425', 'Databases', 'Comp. Sci.', 4);*/
 
+select 1; -- does not support
+
+select 1 from instructor;
+
+select 'ok' from instructor;
+
+select 1 from instructor group by 1;
+
+select sum(salary) from instructor
+group by salary/2;
+
 /*Insert into student
 select ID, name, dept_name, 0 from instructor;*/
+
+select * from department3;
+
+delete from department3;
+
+drop table department3;
+
+select * from department2;
+
+insert into department2
+select * from department;
 
 update instructor
 set salary=salary*1.03
@@ -244,3 +266,13 @@ set salary=case
 when salary<=100000 then salary*1.05
 else salary*1.03
 end
+
+update student S
+set tot_cred =(select sum(credits)
+from takes natural join course
+where S.ID=takes.ID and takes.grade<>'F' and takes.grade is not null);
+
+update student S
+set tot_cred =(select coalesce(sum(credits),0)
+from takes natural join course
+where S.ID=takes.ID and takes.grade<>'F' and takes.grade is not null);
