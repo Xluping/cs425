@@ -1,0 +1,42 @@
+1. The difference between function and procedure: A function must return a value (of any type) by default definition of it, whereas in case of a procedure you need to use parameters like OUT or IN OUT parameters to get the results. You can use a function in a normal SQL where as you cannot use a procedure in SQL statements.
+
+2. Example for auto_increment in Oracle
+
+CREATE TABLE animals (
+     id MEDIUMINT NOT NULL AUTO_INCREMENT,
+     name CHAR(30) NOT NULL,
+     PRIMARY KEY (id)
+);
+
+INSERT INTO animals (name) VALUES
+    ('dog'),('cat'),('penguin'),
+    ('lax'),('whale'),('ostrich');
+
+SELECT * FROM animals;
+3. Example for auto increment ID with a string prefix in Oralce:
+
+e.g.,
+
+userID 
+---------- 
+user000001 
+user000002 
+user000003
+CREATE SEQUENCE CREATE SEQUENCE usertable_seq 
+START WITH 1
+INCREMENT BY 1 
+NOCACHE 
+NOCYCLE; 
+/ 
+
+CREATE OR REPLACE TRIGGER usertable_trigger 
+BEFORE INSERT ON UserTable 
+FOR EACH ROW 
+
+BEGIN 
+ SELECT 'user' || to_char(usertable_seq.NEXTVAL, '000099') 
+ INTO :new.userID 
+ FROM dual; 
+END; 
+/
+Use a combination of trigger and sequence
