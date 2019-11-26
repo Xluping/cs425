@@ -1,0 +1,15 @@
+Solutions
+If "author" is a multi-valued attribute (only accessionno is the PK), the first table is not in 1NF; If it is represented as a single-valued attribute (by using multiple tuples to store different authors; in this case, (accessionno and author) is the PK), it is in 2NF (also in 1NF). 
+
+The second table is in 2NF (also in 1NF). The following tables are in 4NF (also in 1NF, 2NF, 3NF, BCNF).
+
+books_accnno(accessionno, isbn), isbn is FK
+
+books_details(isbn, title, publisher)
+
+books_authors(isbn, author), isbn is FK
+
+users(userid, name, deptid), deptid is FK
+
+departments(deptid, deptname)
+
